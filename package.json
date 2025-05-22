@@ -1,0 +1,23 @@
+{
+  "name": "devaraagam",
+  "version": "1.0.0",
+  "description": "��#\u0000 \u0000D\u0000e\u0000v\u0000a\u0000R\u0000a\u0000a\u0000g\u0000a\u0000m\u0000\r\u0000 \u0000",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AswinT/DevaRaagam.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AswinT/DevaRaagam/issues"
+  },
+  "homepage": "https://github.com/AswinT/DevaRaagam#readme",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
