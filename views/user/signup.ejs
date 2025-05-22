@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DevaRaagam - Sign Up</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    />
+    <style>
+      body {
+        font-family: "Poppins", sans-serif;
+        background-color: #f9fafb;
+      }
+      .form-container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      .form-input {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        border: 1px solid #e5e7eb;
+        border-radius: 0.5rem;
+        transition: all 0.3s ease;
+        font-size: 0.875rem;
+      }
+      .form-input:focus {
+        outline: none;
+        border-color: #3b82f6;
+        box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
+      }
+      .form-label {
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: #374151;
+        margin-bottom: 0.5rem;
+        display: block;
+      }
+      .btn-primary {
+        background: linear-gradient(to right, #3b82f6, #8b5cf6);
+        color: white;
+        padding: 0.75rem 1.5rem;
+        border-radius: 0.5rem;
+        font-weight: 500;
+        width: 100%;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+      }
+      .btn-primary:hover {
+        background: linear-gradient(to right, #2563eb, #7c3aed);
+        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+      }
+      .btn-outline {
+        border: 1px solid #e5e7eb;
+        background-color: white;
+        padding: 0.75rem 1.5rem;
+        border-radius: 0.5rem;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        font-weight: 500;
+        cursor: pointer;
+      }
+      .btn-outline:hover {
+        border-color: #d1d5db;
+        background-color: #f9fafb;
+      }
+      .card {
+        border-radius: 1rem;
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05),
+          0 8px 10px -6px rgba(0, 0, 0, 0.01);
+        background-color: white;
+        overflow: hidden;
+      }
+      .image-container {
+        position: relative;
+        height: 100%;
+        min-height: 500px;
+        overflow: hidden;
+        border-radius: 1rem;
+      }
+      .image-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          135deg,
+          rgba(59, 130, 246, 0.6),
+          rgba(139, 92, 246, 0.6)
+        );
+        mix-blend-mode: overlay;
+      }
+      .divider {
+        display: flex;
+        align-items: center;
+        margin: 1.5rem 0;
+      }
+      .divider::before,
+      .divider::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background-color: #e5e7eb;
+      }
+      .divider-text {
+        padding: 0 1rem;
+        color: #6b7280;
+        font-size: 0.875rem;
+      }
+      @media (max-width: 768px) {
+        .image-container {
+          min-height: 300px;
+        }
+      }
+    </style>
+  </head>
+  <body class="bg-gray-50">
+    <main class="py-12 px-4 md:px-6">
+      <div class="form-container">
+        <div class="grid md:grid-cols-2 gap-8 items-stretch">
+          <!-- Left Side - Image -->
+          <div class="image-container">
+            <img
+              src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+              alt="Premium Headphones"
+              class="w-full h-full object-cover"
+            />
+            <div class="image-overlay"></div>
+            <div
+              class="absolute inset-0 flex flex-col justify-center items-center text-white p-8"
+            >
+              <h2 class="text-3xl md:text-4xl font-bold mb-4 text-center">
+                Experience Premium Sound
+              </h2>
+              <p class="text-lg text-center max-w-md">
+                Join our community of music lovers and discover the perfect
+                audio experience.
+              </p>
+            </div>
+          </div>
+
+          <!-- Right Side - Form -->
+          <div class="card p-8">
+            <div class="text-center mb-8">
+              <h2 class="text-2xl font-bold text-gray-800">
+                Create your account
+              </h2>
+              <p class="text-gray-600 mt-2">
+                Enter your details to get started
+              </p>
+            </div>
+
+            <form
+              action="/signup"
+              method="POST"
+              class="space-y-6"
+              id="signupForm"
+            >
+              <div class="grid grid-cols-2 gap-4">
+                <div>
+                  <label for="firstName" class="form-label">First Name</label>
+                  <input
+                    id="firstName"
+                    name="firstName"
+                    placeholder="John"
+                    required
+                    class="form-input"
+                  />
+                </div>
+                <div>
+                  <label for="lastName" class="form-label">Last Name</label>
+                  <input
+                    id="lastName"
+                    name="lastName"
+                    placeholder="Doe"
+                    required
+                    class="form-input"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label for="phone" class="form-label">Phone Number</label>
+                <input
+                  id="phone"
+                  name="phone"
+                  type="tel"
+                  placeholder="+1 (555) 000-0000"
+                  required
+                  class="form-input"
+                />
+              </div>
+
+              <div>
+                <label for="email" class="form-label">Email Address</label>
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  placeholder="john.doe@example.com"
+                  required
+                  class="form-input"
+                />
+              </div>
+
+              <div>
+                <label for="password" class="form-label">Password</label>
+                <input
+                  id="password"
+                  name="password"
+                  type="password"
+                  required
+                  class="form-input"
+                />
+                <div class="mt-1 text-xs text-gray-500">
+                  Password must be at least 8 characters long
+                </div>
+              </div>
+
+              <div>
+                <label for="confirmPassword" class="form-label"
+                  >Confirm Password</label
+                >
+                <input
+                  id="confirmPassword"
+                  name="confirmPassword"
+                  type="password"
+                  required
+                  class="form-input"
+                />
+              </div>
+
+              <div class="flex items-start">
+                <input
+                  id="terms"
+                  name="terms"
+                  type="checkbox"
+                  class="mt-1 h-4 w-4 text-blue-600 rounded"
+                  required
+                />
+                <label for="terms" class="ml-2 text-sm text-gray-600">
+                  I agree to the
+                  <a href="#" class="text-blue-600 hover:underline"
+                    >Terms of Service</a
+                  >
+                  and
+                  <a href="#" class="text-blue-600 hover:underline"
+                    >Privacy Policy</a
+                  >
+                </label>
+              </div>
+
+              <button type="submit" class="btn-primary">Create Account</button>
+
+              <div class="divider">
+                <span class="divider-text">or continue with</span>
+              </div>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <a href="/auth/google" class="btn-outline">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="#EA4335"
+                    class="mr-2"
+                  >
+                    <path
+                      d="M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133-1.147 1.147-2.933 2.4-6.053 2.4-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.6 0 4.507 1.027 5.907 2.347l2.307-2.307C18.747 1.44 16.133 0 12.48 0 5.867 0 .307 5.387.307 12s5.56 12 12.173 12c3.573 0 6.267-1.173 8.373-3.36 2.16-2.16 2.84-5.213 2.84-7.667 0-.76-.053-1.467-.173-2.053H12.48z"
+                    />
+                  </svg>
+                  Google
+                </a>
+                <a href="/auth/facebook" class="btn-outline">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="#1877F2"
+                    class="mr-2"
+                  >
+                    <path
+                      d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"
+                    />
+                  </svg>
+                  Facebook
+                </a>
+              </div>
+
+              <div class="text-center text-sm mt-6">
+                Already have an account?
+                <a
+                  href="/login"
+                  class="text-blue-600 font-medium hover:underline ml-1"
+                  >Log in</a
+                >
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      // Client-side validation
+      document
+        .getElementById("signupForm")
+        .addEventListener("submit", function (e) {
+          const password = document.getElementById("password").value;
+          const confirmPassword =
+            document.getElementById("confirmPassword").value;
+
+          if (password !== confirmPassword) {
+            e.preventDefault();
+            alert("Passwords do not match!");
+          }
+
+          if (password.length < 8) {
+            e.preventDefault();
+            alert("Password must be at least 8 characters long");
+          }
+        });
+    </script>
+  </body>
+</html>

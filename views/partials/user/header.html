@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DevaRaagam</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    />
+    <style>
+      body {
+        font-family: "Poppins", sans-serif;
+      }
+      .promo-banner {
+        background: linear-gradient(90deg, #000000, #1e293b);
+      }
+      .search-input {
+        transition: all 0.3s ease;
+      }
+      .search-input:focus {
+        box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+      }
+      .nav-link {
+        position: relative;
+      }
+      .nav-link::after {
+        content: "";
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: -4px;
+        left: 0;
+        background-color: #3b82f6;
+        transition: width 0.3s ease;
+      }
+      .nav-link:hover::after {
+        width: 100%;
+      }
+      .nav-link.active::after {
+        width: 100%;
+      }
+      .logo-container {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      .logo-text {
+        font-weight: 700;
+        background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .mobile-menu-button {
+        display: none;
+      }
+      @media (max-width: 768px) {
+        .desktop-nav {
+          display: none;
+        }
+        .mobile-menu-button {
+          display: block;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Promo Banner -->
+    <div class="promo-banner text-white py-3 px-4 text-center">
+      <div
+        class="container mx-auto flex justify-center items-center flex-wrap gap-2"
+      >
+        <span class="text-sm font-light"
+          >Get Free Express Delivery & Up to 50% OFF On Your First Order</span
+        >
+        <a
+          href="#"
+          class="text-white font-medium ml-2 px-3 py-1 rounded-full bg-white/20 text-sm hover:bg-white/30 transition-colors"
+        >
+          Shop Now
+        </a>
+      </div>
+    </div>
+
+    <!-- Navigation -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+      <div class="container mx-auto">
+        <div class="flex items-center justify-between py-4 px-4 md:px-6">
+          <!-- Logo -->
+          <div class="logo-container">
+            <div
+              class="h-10 w-10 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="white"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M8 18V12M12 18V6M16 18v-6"></path>
+                <rect width="20" height="14" x="2" y="6" rx="2"></rect>
+              </svg>
+            </div>
+            <span class="text-xl logo-text">DevaRaagam</span>
+          </div>
+
+          <!-- Desktop Navigation -->
+          <nav class="desktop-nav hidden md:flex items-center space-x-8">
+            <a
+              href="/"
+              class="nav-link text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors"
+              >Home</a
+            >
+            <a
+              href="/products"
+              class="nav-link text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors"
+              >Products</a
+            >
+            <a
+              href="/about"
+              class="nav-link text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors"
+              >About</a
+            >
+            <a
+              href="/contact"
+              class="nav-link text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors"
+              >Contact</a
+            >
+            <a
+              href="/signup"
+              class="nav-link active text-sm font-medium text-blue-600 transition-colors"
+              >Sign Up</a
+            >
+          </nav>
+
+          <!-- Right Side Actions -->
+          <div class="flex items-center gap-4">
+            <!-- Search -->
+            <div class="relative hidden md:flex items-center">
+              <input
+                type="search"
+                placeholder="Search products..."
+                class="search-input w-[220px] lg:w-[280px] pl-10 pr-4 py-2 rounded-full text-sm border border-gray-200 focus:outline-none focus:border-blue-400"
+              />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="absolute left-3 text-gray-400"
+              >
+                <circle cx="11" cy="11" r="8" />
+                <path d="m21 21-4.3-4.3" />
+              </svg>
+            </div>
+
+            <!-- Language Selector -->
+            <div class="flex items-center gap-1 cursor-pointer group">
+              <span class="text-sm font-medium">English</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="group-hover:text-blue-600 transition-colors"
+              >
+                <path d="m6 9 6 6 6-6" />
+              </svg>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button class="mobile-menu-button p-1 rounded-md hover:bg-gray-100">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <line x1="4" x2="20" y1="12" y2="12"></line>
+                <line x1="4" x2="20" y1="6" y2="6"></line>
+                <line x1="4" x2="20" y1="18" y2="18"></line>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+  </body>
+</html>
