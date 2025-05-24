@@ -1,0 +1,270 @@
+
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
+
+      :root {
+        --color-background-deep: hsl(220, 15%, 8%);
+        --color-background-medium: hsl(220, 15%, 12%);
+        --color-background-light: hsl(220, 15%, 18%);
+        --color-text-primary: hsl(0, 0%, 92%);
+        --color-text-secondary: hsl(0, 0%, 65%);
+        --color-text-headings: hsl(0, 0%, 98%);
+        --color-accent: hsl(260, 85%, 65%);
+        --color-accent-hover: hsl(260, 85%, 75%);
+        --color-accent-glow: hsla(260, 85%, 65%, 0.4);
+        --color-border: hsl(220, 15%, 22%);
+        --color-border-focus: var(--color-accent);
+        --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.3);
+        --shadow-md: 0 5px 15px rgba(0, 0, 0, 0.3);
+        --shadow-lg-accent: 0 0 10px var(--color-accent-glow), 0 0 20px var(--color-accent-glow);
+        --transition-fast: all 0.2s ease-out;
+        --transition-medium: all 0.3s ease-out;
+        --font-primary: "Inter", sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: var(--font-primary);
+        color: var(--color-text-primary) !important;
+        background: var(--color-background-deep) !important;
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      .container {
+        background: var(--color-background-deep) !important;
+      }
+
+      .login-container {
+        max-width: 900px;
+        width: 100%;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: var(--shadow-md);
+        background-color: var(--color-background-medium) !important;
+        border: 1px solid var(--color-border);
+      }
+
+      .image-side {
+        background-image: url("/images/headphone-login.jpg");
+        background-size: cover;
+        background-position: center;
+        position: relative;
+        min-height: 400px;
+      }
+
+      .overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 20%, rgba(0, 0, 0, 0.1) 100%);
+        padding: 2rem;
+        color: var(--color-text-headings) !important;
+      }
+
+      .overlay h2 {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+        color: var(--color-text-headings) !important;
+      }
+
+      .overlay p {
+        font-size: 1rem;
+        opacity: 0.9;
+        color: var(--color-text-primary) !important;
+        margin: 0;
+      }
+
+      .form-side {
+        background-color: var(--color-background-medium) !important;
+        padding: 2.5rem 3rem;
+        color: var(--color-text-primary) !important;
+      }
+
+      .logo-text {
+        color: var(--color-text-headings) !important;
+        font-size: 1.8rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+      }
+
+      .text-muted {
+        color: var(--color-text-secondary) !important;
+      }
+
+      /* Form Controls - Dark Theme */
+      .form-floating > .form-control {
+        background-color: var(--color-background-light) !important;
+        color: var(--color-text-primary) !important;
+        border: 1px solid var(--color-border) !important;
+        border-radius: 8px;
+        padding: 1rem;
+        transition: var(--transition-fast);
+      }
+
+      .form-floating > .form-control:focus {
+        background-color: var(--color-background-light) !important;
+        border-color: var(--color-border-focus) !important;
+        box-shadow: 0 0 0 3px var(--color-accent-glow) !important;
+        color: var(--color-text-primary) !important;
+      }
+
+      .form-floating > .form-control::placeholder {
+        color: var(--color-text-secondary) !important;
+        opacity: 0.7;
+      }
+
+      .form-floating > label {
+        color: var(--color-text-secondary) !important;
+      }
+
+      .form-floating > .form-control:focus ~ label,
+      .form-floating > .form-control:not(:placeholder-shown) ~ label {
+        color: var(--color-accent) !important;
+      }
+
+      /* Autofill styles */
+      .form-floating > .form-control:-webkit-autofill,
+      .form-floating > .form-control:-webkit-autofill:hover,
+      .form-floating > .form-control:-webkit-autofill:focus,
+      .form-floating > .form-control:-webkit-autofill:active {
+        -webkit-text-fill-color: var(--color-text-primary) !important;
+        -webkit-box-shadow: 0 0 0px 1000px var(--color-background-light) inset !important;
+        transition: background-color 5000s ease-in-out 0s;
+        caret-color: var(--color-text-primary) !important;
+      }
+
+      /* Error styles */
+      .error-message {
+        color: #ff6b6b !important;
+        font-size: 0.875em;
+        margin-top: 0.25rem;
+        display: block;
+        min-height: 1em;
+      }
+
+      .is-invalid {
+        border-color: #ff6b6b !important;
+      }
+
+      /* Buttons */
+      .btn-primary {
+        background: linear-gradient(90deg, var(--color-accent), hsl(260, 85%, 55%)) !important;
+        border: none !important;
+        color: var(--color-text-headings) !important;
+        padding: 0.9rem 1.5rem;
+        border-radius: 8px;
+        font-weight: 600;
+        transition: var(--transition-medium);
+        box-shadow: var(--shadow-sm);
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-lg-accent) !important;
+        background: linear-gradient(90deg, hsl(260, 85%, 55%), var(--color-accent)) !important;
+        color: var(--color-text-headings) !important;
+      }
+
+      .btn-primary:focus,
+      .btn-primary:active {
+        box-shadow: 0 0 10px var(--color-accent-glow), 0 0 20px var(--color-accent-glow), 0 2px 5px rgba(0, 0, 0, 0.2) !important;
+        background: linear-gradient(90deg, var(--color-accent), hsl(260, 85%, 55%)) !important;
+        color: var(--color-text-headings) !important;
+        border-color: var(--color-accent) !important;
+        transform: translateY(0);
+      }
+
+      .btn-google {
+        background-color: transparent !important;
+        border: 1px solid var(--color-border) !important;
+        color: var(--color-text-primary) !important;
+        padding: 0.8rem 1.5rem;
+        border-radius: 8px;
+        transition: var(--transition-fast);
+      }
+
+      .btn-google:hover {
+        border-color: var(--color-accent) !important;
+        color: var(--color-accent) !important;
+        background-color: rgba(138, 99, 210, 0.1) !important;
+        box-shadow: 0 0 8px var(--color-accent-glow);
+      }
+
+      /* Links */
+      .forgot-password {
+        color: var(--color-text-secondary) !important;
+        transition: var(--transition-fast);
+        text-decoration: none;
+      }
+
+      .forgot-password:hover {
+        color: var(--color-accent) !important;
+        text-decoration: none;
+      }
+
+      .text-dark {
+        color: var(--color-accent) !important;
+      }
+
+      .fw-medium {
+        font-weight: 500;
+      }
+
+      /* Divider */
+      .divider {
+        display: flex;
+        align-items: center;
+        text-align: center;
+        margin: 1.5rem 0;
+        color: var(--color-text-secondary) !important;
+      }
+
+      .divider::before,
+      .divider::after {
+        content: "";
+        flex: 1;
+        border-bottom: 1px solid var(--color-border);
+      }
+
+      .divider span {
+        padding: 0 0.75rem;
+        font-size: 0.8rem;
+        color: var(--color-text-secondary) !important;
+      }
+
+      /* Responsive */
+      @media (max-width: 767.98px) {
+        .form-side {
+          padding: 2rem 1.5rem;
+        }
+        
+        .image-side {
+          min-height: 200px;
+        }
+        
+        .overlay {
+          padding: 1.5rem;
+        }
+      }
+
+      /* Override Bootstrap text colors */
+      .text-center {
+        color: inherit !important;
+      }
+
+      p {
+        color: var(--color-text-primary) !important;
+      }
+
+      /* Input focus ring */
+      .form-control:focus {
+        outline: none !important;
+      }
+    

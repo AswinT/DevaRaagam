@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= typeof title !== 'undefined' ? title : 'Our Products' %> - DevaRaagam</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/user/products.css"> <style>
+        /* Quick style for active filter - can be moved to CSS file */
+        .filter-list-group-item.active {
+            background-color: #007bff; /* Bootstrap primary blue */
+            color: white;
+            border-color: #007bff;
+        }
+        .product-card .old-price {
+            text-decoration: line-through;
+            color: #6c757d; /* Bootstrap secondary text color */
+            font-size: 0.9em;
+            margin-left: 0.5rem;
+        }
+        .product-card .offer-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: #dc3545; /* Bootstrap danger red */
+            color: white;
+            padding: 0.25em 0.6em; /* Adjusted padding */
+            font-size: 0.7em;     /* Adjusted font size */
+            border-radius: 0.25rem;
+            z-index: 10;
+            font-weight: bold;
+        }
+        .spin { display: inline-block; animation: spin 1s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .product-card-img {
+            width: 100%;
+            height: 200px; /* Or a fixed height you prefer */
+            object-fit: contain; /* 'contain' is good for product images to show full item */
+            padding: 0.5rem; /* Some padding around the image */
+        }
+        .card {
+            display: flex;
+            flex-direction: column;
+        }
+        .card-body {
+            flex-grow: 1; /* Makes card body take available space */
+            display: flex;
+            flex-direction: column;
+        }
+        .card-footer {
+            margin-top: auto; /* Pushes footer to bottom of card */
+        }
+    </style>
+</head>
+<body>
+    <%# Include your header partial %>
+    <%- include('../partials/header', { isAuthenticated: typeof isAuthenticated !== 'undefined' ? isAuthenticated : false, user: typeof user !== 'undefined' ? user : null, cartCount: typeof cartCount !== 'undefined' ? cartCount : 0, page: 'products' }) %>
+
+    <main class="container mt-4 mb-5">
+        <nav aria-label="breadcrumb" style="--bs-breadcrumb-divider: '>';">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><%= typeof title !== 'undefined' ? title : 'Products' %></li>
+            </ol>
+        </nav>
+
+        <div class="row">
+            <aside class="col-lg-3 mb-4 mb-lg-0">
+                <h4>Filters</h4>
+                <form id="filterForm" method="GET" action="/products"> <div class="mb-3">
+                        <label for="searchQuery" class="form-label fw-semibold small">Search Products</label>
+                        <input type="text" class="form-control form-control-sm" id="searchQuery" name="search" value="<%= (typeof currentFilters !== 'undefined' && currentFilters.search) ? currentFilters.search : '' %>" placeholder="Enter keyword...">
+                    </div>
+
+                    <div class="mb-3">
+                        <h5 class="fw-semibold">Category</h5>
+                        <ul class="list-group filter-list-group">
+                            <% const allCatParams = { ...currentFilters }; delete allCatParams.category; delete allCatParams.page; %>
+                            <a href="/products?<%= new URLSearchParams(allCatParams).toString() %>"
+                               class="list-group-item list-group-item-action <%= (typeof currentFilters === 'undefined' || !currentFilters.category) ? 'active' : '' %>">
+                                All Categories
+                            </a>
+                            <% if (typeof categories !== 'undefined' && categories.length > 0) { %>
+                                <% categories.forEach(category => { %>
+                                    <% const categoryParams = { ...currentFilters, category: category.name }; delete categoryParams.page; %>
+                                    <a href="/products?<%= new URLSearchParams(categoryParams).toString() %>"
+                                       class="list-group-item list-group-item-action <%= (typeof currentFilters !== 'undefined' && currentFilters.category === category.name) ? 'active' : '' %>">
+                                        <%= category.name %>
+                                    </a>
+                                <% }); %>
+                            <% } %>
+                        </ul>
+                    </div>
+
+                    <% if (typeof brands !== 'undefined' && brands.length > 0) { %>
+                    <div class="mb-3">
+                        <h5 class="fw-semibold">Brand</h5>
+                        <% brands.forEach(brand => { %>
+                            <div class="form-check">
+                                <input class="form-check-input filter-checkbox" type="checkbox" name="brand" value="<%= brand %>" id="brand_<%= brand.replace(/\s+/g, '-') %>"
+                                    <%= (typeof currentFilters !== 'undefined' && Array.isArray(currentFilters.brand) && currentFilters.brand.includes(brand)) ? 'checked' : '' %>>
+                                <label class="form-check-label small" for="brand_<%= brand.replace(/\s+/g, '-') %>"><%= brand %></label>
+                            </div>
+                        <% }); %>
+                    </div>
+                    <% } %>
+
+                    <% if (typeof headphoneTypes !== 'undefined' && headphoneTypes.length > 0) { %>
+                    <div class="mb-3">
+                        <h5 class="fw-semibold">Type</h5>
+                        <% headphoneTypes.forEach(type => { %>
+                            <div class="form-check">
+                                <input class="form-check-input filter-checkbox" type="checkbox" name="type" value="<%= type %>" id="type_<%= type.replace(/\s+/g, '-') %>"
+                                <%= (typeof currentFilters !== 'undefined' && Array.isArray(currentFilters.type) && currentFilters.type.includes(type)) ? 'checked' : '' %>>
+                                <label class="form-check-label small" for="type_<%= type.replace(/\s+/g, '-') %>"><%= type %></label>
+                            </div>
+                        <% }); %>
+                    </div>
+                    <% } %>
+
+                     <% if (typeof connectivities !== 'undefined' && connectivities.length > 0) { %>
+                    <div class="mb-3">
+                        <h5 class="fw-semibold">Connectivity</h5>
+                        <% connectivities.forEach(conn => { %>
+                            <div class="form-check">
+                                <input class="form-check-input filter-checkbox" type="checkbox" name="connectivity" value="<%= conn %>" id="conn_<%= conn.replace(/\s+/g, '-') %>"
+                                <%= (typeof currentFilters !== 'undefined' && Array.isArray(currentFilters.connectivity) && currentFilters.connectivity.includes(conn)) ? 'checked' : '' %>>
+                                <label class="form-check-label small" for="conn_<%= conn.replace(/\s+/g, '-') %>"><%= conn %></label>
+                            </div>
+                        <% }); %>
+                    </div>
+                    <% } %>
+
+                    <div class="mb-3">
+                        <h5 class="fw-semibold">Price Range</h5>
+                        <div class="d-flex align-items-center">
+                            <input type="number" class="form-control form-control-sm me-1" name="minPrice" placeholder="Min" value="<%= (typeof currentFilters !== 'undefined' && currentFilters.minPrice) ? currentFilters.minPrice : '' %>" min="0" style="width: 70px;">
+                            <span class="mx-1">-</span>
+                            <input type="number" class="form-control form-control-sm ms-1" name="maxPrice" placeholder="Max" value="<%= (typeof currentFilters !== 'undefined' && currentFilters.maxPrice) ? currentFilters.maxPrice : '' %>" min="0" style="width: 70px;">
+                        </div>
+                    </div>
+
+                    <input type="hidden" name="sort" value="<%= (typeof currentFilters !== 'undefined' && currentFilters.sort) ? currentFilters.sort : 'newest' %>">
+                    <input type="hidden" name="limit" value="<%= typeof limit !== 'undefined' ? limit : 9 %>">
+
+                    <button type="submit" class="btn btn-primary btn-sm w-100 mb-2">Apply Filters</button>
+                    <a href="/products" class="btn btn-outline-secondary btn-sm w-100">Clear All Filters</a>
+                </form>
+            </aside>
+
+            <section class="col-lg-9">
+                <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap">
+                    <p class="mb-2 mb-md-0 text-muted small">
+                        <% if (typeof totalProducts !== 'undefined' && totalProducts > 0) { %>
+                            Showing <%= ((currentPage - 1) * limit) + 1 %>-<%= Math.min(currentPage * limit, totalProducts) %> of <%= totalProducts %> results
+                        <% } else if (typeof totalProducts !== 'undefined') { %>
+                            No products found
+                        <% } %>
+                    </p>
+                    <form id="sortForm" method="GET" action="/products" class="d-flex align-items-center ms-md-auto">
+                        <% if(typeof currentFilters !== 'undefined') { %>
+                            <% Object.entries(currentFilters).forEach(([key, value]) => { %>
+                                <% if (key !== 'sort' && key !== 'page' && value && value !== '') { %>
+                                    <% if (Array.isArray(value)) { %>
+                                        <% value.forEach(valItem => { %>
+                                            <input type="hidden" name="<%= key %>" value="<%= valItem %>">
+                                        <% }) %>
+                                    <% } else { %>
+                                        <input type="hidden" name="<%= key %>" value="<%= value %>">
+                                    <% } %>
+                                <% } %>
+                            <% }); %>
+                        <% } %>
+                        <input type="hidden" name="limit" value="<%= typeof limit !== 'undefined' ? limit : 9 %>">
+
+                        <label for="sortOptions" class="form-label me-2 mb-0 small text-nowrap">Sort by:</label>
+                        <select class="form-select form-select-sm" id="sortOptions" name="sort" onchange="this.form.submit()" style="min-width: 150px;">
+                            <option value="newest" <%= (typeof currentFilters !== 'undefined' && currentFilters.sort === 'newest') ? 'selected' : '' %>>Newest</option>
+                            <option value="price-asc" <%= (typeof currentFilters !== 'undefined' && currentFilters.sort === 'price-asc') ? 'selected' : '' %>>Price: Low to High</option>
+                            <option value="price-desc" <%= (typeof currentFilters !== 'undefined' && currentFilters.sort === 'price-desc') ? 'selected' : '' %>>Price: High to Low</option>
+                            <option value="name-asc" <%= (typeof currentFilters !== 'undefined' && currentFilters.sort === 'name-asc') ? 'selected' : '' %>>Name: A to Z</option>
+                            <option value="name-desc" <%= (typeof currentFilters !== 'undefined' && currentFilters.sort === 'name-desc') ? 'selected' : '' %>>Name: Z to A</option>
+                        </select>
+                    </form>
+                </div>
+
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 g-4">
+                    <% if (typeof products !== 'undefined' && products.length > 0) { %>
+                        <% products.forEach(product => { %>
+                            <div class="col">
+                                <div class="card h-100 product-card">
+                                    <% if (product.offerDetails) { %>
+                                        <div class="offer-badge"><%= product.offerDetails.discountPercentage.toFixed(0) %>% OFF</div>
+                                    <% } %>
+                                    <a href="/product/<%= product._id %>">
+                                        <img src="<%= product.mainImage || '/images/placeholder_headphone.png' %>" class="card-img-top product-card-img" alt="<%= product.title %>">
+                                    </a>
+                                    <div class="card-body">
+                                        <h5 class="card-title h6 mb-1">
+                                            <a href="/product/<%= product._id %>" class="text-dark text-decoration-none stretched-link" title="<%= product.title %>">
+                                                <%= product.title.substring(0, 50) %><% if (product.title.length > 50) { %>...<% } %>
+                                            </a>
+                                        </h5>
+                                        <p class="card-text small text-muted mb-2"><%= product.brand %></p>
+                                        <div>
+                                            <span class="fw-bold text-primary fs-5">₹<%= product.effectivePrice.toFixed(2) %></span>
+                                            <% if (product.regularPrice && product.effectivePrice < product.regularPrice) { %>
+                                                <span class="old-price ms-1">₹<%= product.regularPrice.toFixed(2) %></span>
+                                            <% } %>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer bg-white border-top-0 pt-0 pb-3">
+                                        <button class="btn btn-dark btn-sm w-100 add-to-cart-btn" data-product-id="<%= product._id %>">
+                                            <i class="ri-shopping-cart-line"></i> Add to Cart
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        <% }); %>
+                    <% } else { %>
+                        <div class="col-12">
+                            <p class="text-center text-muted mt-5">No products found matching your criteria. Try adjusting your filters.</p>
+                        </div>
+                    <% } %>
+                </div>
+
+                <% if (typeof totalPages !== 'undefined' && totalPages > 1) { %>
+                    <nav aria-label="Page navigation products" class="mt-5">
+                        <ul class="pagination justify-content-center">
+                            <li class="page-item <%= currentPage === 1 ? 'disabled' : '' %>">
+                                <a class="page-link" href="/products?page=<%= currentPage - 1 %>&<%= queryString %>" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                            <%
+                                let startPage = Math.max(1, currentPage - 2);
+                                let endPage = Math.min(totalPages, currentPage + 2);
+                                if (currentPage <= 3) { endPage = Math.min(5, totalPages); }
+                                if (currentPage > totalPages - 2) { startPage = Math.max(1, totalPages - 4); }
+                            %>
+                            <% if (startPage > 1) { %>
+                                <li class="page-item"><a class="page-link" href="/products?page=1&<%= queryString %>">1</a></li>
+                                <% if (startPage > 2) { %><li class="page-item disabled"><span class="page-link">...</span></li><% } %>
+                            <% } %>
+                            <% for (let i = startPage; i <= endPage; i++) { %>
+                                <li class="page-item <%= i === currentPage ? 'active' : '' %>">
+                                    <a class="page-link" href="/products?page=<%= i %>&<%= queryString %>"><%= i %></a>
+                                </li>
+                            <% } %>
+                             <% if (endPage < totalPages) { %>
+                                <% if (endPage < totalPages - 1) { %><li class="page-item disabled"><span class="page-link">...</span></li><% } %>
+                                <li class="page-item"><a class="page-link" href="/products?page=<%= totalPages %>&<%= queryString %>"><%= totalPages %></a></li>
+                            <% } %>
+                            <li class="page-item <%= currentPage === totalPages ? 'disabled' : '' %>">
+                                <a class="page-link" href="/products?page=<%= currentPage + 1 %>&<%= queryString %>" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                <% } %>
+            </section>
+        </div>
+    </main>
+
+    <%- include('../partials/footer') %>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.add-to-cart-btn').forEach(button => {
+                button.addEventListener('click', async function() {
+                    const productId = this.dataset.productId;
+                    const originalText = this.innerHTML;
+                    this.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Adding...';
+                    this.disabled = true;
+
+                    try {
+                        const response = await fetch('/cart/add', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ productId: productId, quantity: 1 })
+                        });
+                        const result = await response.json();
+                        if (result.success) {
+                            // Consider using a more subtle notification like a toast
+                            alert(result.message || 'Added to cart!');
+                            
+                            // Update cart count in header
+                            const cartLink = document.querySelector('.nav__item a[href="/cart"], .navbar-nav a[href="/cart"]'); // Targets both header types
+                            if (cartLink && result.cartCount !== undefined) {
+                                let cartBadge = cartLink.querySelector('.badge');
+                                if (!cartBadge && result.cartCount > 0) {
+                                    cartBadge = document.createElement('span');
+                                    cartBadge.className = 'badge bg-danger rounded-pill ms-1';
+                                    cartLink.appendChild(cartBadge);
+                                }
+                                if (cartBadge) {
+                                   cartBadge.textContent = result.cartCount;
+                                   cartBadge.style.display = result.cartCount > 0 ? 'inline-block' : 'none';
+                                }
+                            }
+                        } else {
+                            alert(result.message || 'Could not add to cart.');
+                        }
+                    } catch (error) {
+                        console.error('Add to cart error:', error);
+                        alert('Error adding to cart.');
+                    } finally {
+                         this.innerHTML = originalText;
+                         this.disabled = false;
+                    }
+                });
+            });
+
+            // Optional: Auto-submit filter form on checkbox change if you remove the "Apply Filters" button
+            // document.querySelectorAll('.filter-checkbox').forEach(checkbox => {
+            //     checkbox.addEventListener('change', function() {
+            //         document.getElementById('filterForm').submit();
+            //     });
+            // });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,267 @@
+/* public/css/user/products.css */
+
+/* Import or define dark theme variables (from home.css or a global CSS) */
+:root {
+  --header-height: 3rem; /* From home.css */
+  --hue-color: 206;
+  --black-color: hsl(var(--hue-color), 4%, 4%);
+  --black-color-alt: hsl(var(--hue-color), 4%, 8%);
+  --title-color: hsl(var(--hue-color), 4%, 95%);
+  --text-color: hsl(var(--hue-color), 4%, 75%);
+  --text-color-light: hsl(var(--hue-color), 4%, 65%);
+  --white-color: #fff;
+  --body-color: hsl(var(--hue-color), 4%, 6%);
+  --container-color: hsl(var(--hue-color), 4%, 10%);
+  --card-bg-color: var(--container-color); /* For product cards */
+  --input-bg-color: hsl(var(--hue-color), 4%, 12%);
+  --input-border-color: hsl(var(--hue-color), 4%, 25%);
+  --input-focus-border-color: hsl(var(--hue-color), 4%, 50%);
+  --button-primary-bg: var(--black-color-alt);
+  --button-primary-hover-bg: var(--black-color);
+  --link-color: var(--text-color-light);
+  --link-hover-color: var(--title-color);
+  --border-color: hsl(var(--hue-color), 4%, 15%); /* For separating elements */
+}
+
+/* Basic body and layout styles (similar to home.css) */
+body {
+  margin: var(--header-height) 0 0 0; /* Adjust if header is different */
+  font-family: "Poppins", sans-serif; /* Or "Inter" if you prefer */
+  font-size: 0.938rem; /* From home.css */
+  background-color: var(--body-color);
+  color: var(--text-color);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--title-color);
+}
+
+a {
+  text-decoration: none;
+  color: var(--link-color);
+}
+a:hover {
+  color: var(--link-hover-color);
+}
+
+.container {
+  /* Bootstrap container */
+  max-width: 1140px; /* Or your preferred max width */
+}
+
+/* Shop Page Specific Styles */
+.shop-header {
+  /* If you have a main title section */
+  padding: 2rem 0;
+  text-align: center;
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 2rem;
+}
+.shop-header h1 {
+  font-size: 2.5rem; /* Example size */
+}
+
+.filters-sidebar {
+  background-color: var(--container-color);
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  margin-bottom: 2rem; /* For mobile */
+}
+.filters-sidebar h4 {
+  margin-bottom: 1rem;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 0.5rem;
+}
+.filters-sidebar .form-label {
+  color: var(--text-color-light);
+  font-size: 0.9rem;
+}
+.filters-sidebar .form-check-input {
+  background-color: var(--input-bg-color);
+  border-color: var(--input-border-color);
+}
+.filters-sidebar .form-check-input:checked {
+  background-color: var(--title-color); /* Or a primary accent color */
+  border-color: var(--title-color);
+}
+.filters-sidebar .form-check-label {
+  color: var(--text-color);
+}
+.filters-sidebar .form-control,
+.filters-sidebar .form-select {
+  background-color: var(--input-bg-color);
+  color: var(--title-color);
+  border-color: var(--input-border-color);
+}
+.filters-sidebar .form-control::placeholder,
+.filters-sidebar .form-select {
+  color: var(--text-color-light);
+}
+.filters-sidebar .form-control:focus,
+.filters-sidebar .form-select:focus {
+  border-color: var(--input-focus-border-color);
+  box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.1);
+}
+.filters-sidebar .btn-primary {
+  /* Apply filter button */
+  background-color: var(--button-primary-bg);
+  border-color: var(--button-primary-bg);
+  color: var(--white-color);
+  width: 100%;
+}
+.filters-sidebar .btn-primary:hover {
+  background-color: var(--button-primary-hover-bg);
+  border-color: var(--button-primary-hover-bg);
+}
+.filters-sidebar a.text-decoration-none {
+  /* Clear filters link */
+  color: var(--link-color);
+}
+.filters-sidebar a.text-decoration-none:hover {
+  color: var(--link-hover-color);
+}
+
+.product-grid {
+  /* display: grid; gap: 1.5rem; */ /* If not using Bootstrap row/col */
+}
+
+.product-card {
+  background-color: var(--card-bg-color);
+  border: 1px solid var(--border-color);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  text-align: center;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Pushes content and button */
+  height: 100%; /* For consistent card height in a row */
+}
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+.product-card .product-image-container {
+  background-color: var(--black-color); /* Or a slightly lighter shade */
+  padding: 1rem;
+  border-radius: 0.3rem;
+  margin-bottom: 1rem;
+  height: 200px; /* Fixed height for image container */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.product-card img {
+  max-width: 100%;
+  max-height: 100%; /* Ensure image fits within container */
+  object-fit: contain; /* Scales image nicely */
+  border-radius: 0.25rem; /* If image itself needs rounding */
+}
+
+.product-card .product-category {
+  font-size: 0.8rem;
+  color: var(--text-color-light);
+  margin-bottom: 0.25rem;
+  text-transform: uppercase;
+}
+
+.product-card .product-title {
+  font-size: 1.1rem;
+  font-weight: 600; /* From Poppins font weights in home.css */
+  color: var(--title-color);
+  margin-bottom: 0.5rem;
+  /* Clamp text to 2 lines */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-height: 2.6em; /* Approx 2 lines height */
+}
+.product-card .product-brand {
+  font-size: 0.9rem;
+  color: var(--text-color);
+  margin-bottom: 0.5rem;
+}
+
+.product-card .price-section {
+  margin-bottom: 0.75rem;
+}
+.product-card .current-price {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--title-color); /* Or a highlight color like a gold/yellow */
+}
+.product-card .original-price {
+  font-size: 0.9rem;
+  color: var(--text-color-light);
+  text-decoration: line-through;
+  margin-left: 0.5rem;
+}
+.product-card .discount-badge {
+  /* If you show discount percentage */
+  background-color: #dc3545; /* Red for discount */
+  color: var(--white-color);
+  font-size: 0.75rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 0.25rem;
+  margin-left: 0.5rem;
+  font-weight: 500;
+}
+
+.product-card .btn-add-to-cart {
+  background-color: var(--button-primary-bg);
+  border: 1px solid var(--button-primary-bg);
+  color: var(--white-color);
+  padding: 0.5rem 1rem;
+  border-radius: 0.35rem;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  font-weight: 500;
+  transition: background-color 0.2s;
+  width: 100%; /* Make button full width of its container */
+  margin-top: auto; /* Pushes button to bottom if card is flex column */
+}
+.product-card .btn-add-to-cart:hover {
+  background-color: var(--button-primary-hover-bg);
+  border-color: var(--button-primary-hover-bg);
+}
+
+/* Pagination */
+.pagination .page-item .page-link {
+  background-color: var(--input-bg-color);
+  border-color: var(--input-border-color);
+  color: var(--text-color);
+}
+.pagination .page-item.active .page-link {
+  background-color: var(--button-primary-bg);
+  border-color: var(--button-primary-bg);
+  color: var(--white-color);
+}
+.pagination .page-item.disabled .page-link {
+  background-color: var(--container-color);
+  border-color: var(--input-border-color);
+  color: var(--text-color-light);
+  opacity: 0.6;
+}
+.pagination .page-item .page-link:hover {
+  background-color: var(--black-color-alt);
+  color: var(--title-color);
+}
+
+/* No products found message */
+.no-products-message {
+  color: var(--text-color);
+  text-align: center;
+  padding: 2rem;
+  font-size: 1.2rem;
+}
+
+/* Ensure header, nav, footer styles from home.css are applied or defined globally */
+/* You might want to create a shared global-dark.css for common elements */

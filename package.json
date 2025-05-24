@@ -1,26 +1,16 @@
 {
-  "name": "devaraagam",
+  "name": "dr",
   "version": "1.0.0",
-  "description": "��#\u0000 \u0000D\u0000e\u0000v\u0000a\u0000R\u0000a\u0000a\u0000g\u0000a\u0000m\u0000\r\u0000 \u0000",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/AswinT/DevaRaagam.git"
-  },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/AswinT/DevaRaagam/issues"
-  },
-  "homepage": "https://github.com/AswinT/DevaRaagam#readme",
+  "description": "",
   "dependencies": {
-    "bcryptjs": "^3.0.2",
-    "connect-flash": "^0.1.1",
-    "crypto": "^1.0.1",
+    "bcrypt": "^6.0.0",
     "dotenv": "^16.5.0",
     "ejs": "^3.1.10",
     "express": "^5.1.0",

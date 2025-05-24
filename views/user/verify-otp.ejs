@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Verify OTP - DevaRaagam Headphones</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../css/user/verifyOtp.css">
+  </head>
+  <body>
+    <div class="container">
+      <div class="otp-card">
+        <div class="otp-header">
+          <h2>Verify Your Account</h2>
+          <p class="mb-0">
+            An OTP has been sent to
+            <strong id="userEmailDisplay">user@example.com</strong>.
+          </p>
+        </div>
+        <div class="otp-body">
+          <form id="otpForm" novalidate>
+            <p class="text-muted text-center small">
+              Please enter the 6-digit code below.
+            </p>
+            <div class="otp-inputs" id="otpInputsContainer">
+              <input
+                type="text"
+                class="form-control otp-input"
+                maxlength="1"
+                pattern="[0-9]"
+                inputmode="numeric"
+                required
+                id="otp-0"
+              />
+              <input
+                type="text"
+                class="form-control otp-input"
+                maxlength="1"
+                pattern="[0-9]"
+                inputmode="numeric"
+                required
+                id="otp-1"
+              />
+              <input
+                type="text"
+                class="form-control otp-input"
+                maxlength="1"
+                pattern="[0-9]"
+                inputmode="numeric"
+                required
+                id="otp-2"
+              />
+              <input
+                type="text"
+                class="form-control otp-input"
+                maxlength="1"
+                pattern="[0-9]"
+                inputmode="numeric"
+                required
+                id="otp-3"
+              />
+              <input
+                type="text"
+                class="form-control otp-input"
+                maxlength="1"
+                pattern="[0-9]"
+                inputmode="numeric"
+                required
+                id="otp-4"
+              />
+              <input
+                type="text"
+                class="form-control otp-input"
+                maxlength="1"
+                pattern="[0-9]"
+                inputmode="numeric"
+                required
+                id="otp-5"
+              />
+            </div>
+
+            <div class="status-message mt-3" id="statusMessage"></div>
+
+            <button type="submit" class="btn btn-primary w-100 btn-verify mt-3">
+              Verify OTP
+            </button>
+          </form>
+
+          <div class="timer-container text-center mt-3">
+            <p class="mb-1 small text-muted">
+              OTP expires in: <span id="timer" class="timer">05:00</span>
+            </p>
+            <span id="timerExpiredMessage" class="timer-expired small"
+              >OTP has expired. Please resend.</span
+            >
+          </div>
+
+          <div class="text-center mt-2">
+            <p class="mb-0 text-muted small">Didn't receive the code?</p>
+            <button
+              id="resendOtpBtn"
+              class="btn btn-link btn-resend p-0"
+              disabled
+            >
+              Resend OTP
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const otpInputsContainer =
+          document.getElementById("otpInputsContainer");
+        const inputs = Array.from(
+          otpInputsContainer.querySelectorAll(".otp-input")
+        );
+        const otpForm = document.getElementById("otpForm");
+        const statusMessage = document.getElementById("statusMessage");
+        const resendOtpBtn = document.getElementById("resendOtpBtn");
+        const timerDisplay = document.getElementById("timer");
+        const timerExpiredMessage = document.getElementById(
+          "timerExpiredMessage"
+        );
+
+        // Demo values - in real implementation these would come from server
+        const userEmailForResend = "user@example.com";
+        const otpPurpose = "signup";
+
+        inputs.forEach((input, index) => {
+          input.addEventListener("input", (e) => {
+            input.value = input.value.replace(/[^0-9]/g, "");
+            if (input.value.length === 1 && index < inputs.length - 1) {
+              inputs[index + 1].focus();
+            }
+            if (input.value.length > 1) {
+              input.value = input.value.slice(0, 1);
+            }
+          });
+
+          input.addEventListener("keydown", (e) => {
+            if (e.key === "Backspace") {
+              if (input.value.length === 0 && index > 0) {
+                inputs[index - 1].focus();
+              } else if (input.value.length === 1 && index < inputs.length) {
+                setTimeout(() => {
+                  if (index > 0 && inputs[index].value === "") {
+                    // inputs[index - 1].focus();
+                  }
+                }, 0);
+              }
+            } else if (e.key === "ArrowLeft" && index > 0) {
+              inputs[index - 1].focus();
+            } else if (e.key === "ArrowRight" && index < inputs.length - 1) {
+              inputs[index + 1].focus();
+            }
+          });
+
+          if (index === inputs.length - 1) {
+            input.addEventListener("input", () => {
+              if (inputs.every((inp) => inp.value.length === 1)) {
+                otpForm.requestSubmit();
+              }
+            });
+          }
+        });
+
+        inputs[0].addEventListener("paste", (e) => {
+          e.preventDefault();
+          const pastedData = (e.clipboardData || window.clipboardData)
+            .getData("text")
+            .trim();
+          if (pastedData.length === 6 && /^\d+$/.test(pastedData)) {
+            inputs.forEach((input, index) => {
+              input.value = pastedData[index] || "";
+            });
+            inputs[inputs.length - 1].focus();
+            otpForm.requestSubmit();
+          }
+        });
+
+        otpForm.addEventListener("submit", async function (event) {
+          event.preventDefault();
+          statusMessage.textContent = "";
+          statusMessage.style.display = "none";
+          statusMessage.className = "status-message mt-3";
+
+          const otp = inputs.map((input) => input.value).join("");
+          if (otp.length !== 6) {
+            statusMessage.textContent = "Please enter a complete 6-digit OTP.";
+            statusMessage.classList.add("status-error");
+            statusMessage.style.display = "block";
+            return;
+          }
+
+          const submitButton = otpForm.querySelector('button[type="submit"]');
+          submitButton.disabled = true;
+          submitButton.textContent = "Verifying...";
+
+          // Demo verification - replace with actual API call
+          setTimeout(() => {
+            if (otp === "123456") {
+              statusMessage.textContent = "OTP verified successfully!";
+              statusMessage.classList.add("status-success");
+              statusMessage.style.display = "block";
+              setTimeout(() => {
+                // window.location.href = "/dashboard";
+                alert("Redirecting to dashboard...");
+              }, 1500);
+            } else {
+              statusMessage.textContent = "Invalid OTP. Please try again.";
+              statusMessage.classList.add("status-error");
+              statusMessage.style.display = "block";
+            }
+            submitButton.disabled = false;
+            submitButton.textContent = "Verify OTP";
+          }, 1500);
+        });
+
+        let timeLeft = 300;
+        let timerInterval;
+
+        function startTimer() {
+          resendOtpBtn.disabled = true;
+          timerExpiredMessage.style.display = "none";
+          timerDisplay.style.display = "inline";
+          timeLeft = 300;
+
+          timerInterval = setInterval(() => {
+            const minutes = Math.floor(timeLeft / 60);
+            let seconds = timeLeft % 60;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+            timerDisplay.textContent = `${minutes}:${seconds}`;
+
+            if (timeLeft <= 0) {
+              clearInterval(timerInterval);
+              resendOtpBtn.disabled = false;
+              timerDisplay.style.display = "none";
+              timerExpiredMessage.style.display = "block";
+            }
+            timeLeft--;
+          }, 1000);
+        }
+
+        resendOtpBtn.addEventListener("click", async () => {
+          statusMessage.textContent = "";
+          statusMessage.style.display = "none";
+          resendOtpBtn.disabled = true;
+          const originalResendText = resendOtpBtn.textContent;
+          resendOtpBtn.textContent = "Sending...";
+
+          // Demo resend - replace with actual API call
+          setTimeout(() => {
+            statusMessage.textContent = "OTP has been resent to your email.";
+            statusMessage.classList.remove("status-error");
+            statusMessage.classList.add("status-success");
+            statusMessage.style.display = "block";
+            startTimer();
+          }, 1000);
+        });
+
+        startTimer();
+        inputs[0].focus();
+      });
+    </script>
+  </body>
+</html>

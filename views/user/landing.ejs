@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link
+      rel="shortcut icon"
+      href="/images/home-page/favicon.png"
+      type="image/x-icon"
+    />
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="/css/user/home.css" />
+
+    <title>
+      <%= typeof title !== 'undefined' ? title : 'DevaRaagam Headphones' %>
+    </title>
+  </head>
+  <body>
+    <header class="header" id="header">
+      <nav class="nav container">
+        <a href="/" class="nav__logo">
+          <img src="/images/home-page/logo.png" alt="DevaRaagam Logo" />
+        </a>
+
+        <div class="nav__menu" id="nav-menu">
+          <ul class="nav__list">
+            <li class="nav__item">
+              <a href="#home" class="nav__link active-link">Home</a>
+            </li>
+            <li class="nav__item">
+              <a href="#specs" class="nav__link">Specs</a>
+            </li>
+            <li class="nav__item">
+              <a href="#case" class="nav__link">Case</a>
+            </li>
+            <li class="nav__item">
+              <a href="/shop" class="nav__link">Products</a>
+            </li>
+            <% if (typeof isAuthenticated !== 'undefined' && isAuthenticated) {
+            %>
+            <li class="nav__item">
+              <a href="/profile" class="nav__link">Profile</a>
+            </li>
+            <li class="nav__item">
+              <a href="/cart" class="nav__link"
+                >Cart <% if (typeof cartCount !== 'undefined' && cartCount > 0)
+                { %>
+                <span class="badge bg-danger rounded-pill"
+                  ><%= cartCount %></span
+                >
+                <% } %>
+              </a>
+            </li>
+            <li class="nav__item">
+              <a href="/logout" class="nav__link">Logout</a>
+            </li>
+            <% } else { %>
+            <li class="nav__item">
+              <a href="/login" class="nav__link">Login</a>
+            </li>
+            <li class="nav__item">
+              <a href="/signup" class="nav__link">Sign Up</a>
+            </li>
+            <% } %>
+          </ul>
+          <div class="nav__close" id="nav-close">
+            <i class="ri-close-line"></i>
+          </div>
+        </div>
+        <div class="nav__toggle" id="nav-toggle">
+          <i class="ri-function-line"></i>
+        </div>
+      </nav>
+    </header>
+
+    <main class="main">
+      <section class="home section" id="home">
+        <div class="home__container container grid">
+          <div>
+            <img
+              src="/images/home-page/home.png"
+              alt="Featured Headphone"
+              class="home__img"
+            />
+          </div>
+          <div class="home__data">
+            <div class="home__header">
+              <h1 class="home__title">
+                <%= (typeof heroProduct !== 'undefined' && heroProduct.category)
+                ? heroProduct.category : "On Ear" %>
+              </h1>
+              <h2 class="home__subtitle">
+                <%= (typeof heroProduct !== 'undefined' && heroProduct.name) ?
+                heroProduct.name : "Beats 3" %>
+              </h2>
+            </div>
+            <div class="home__footer">
+              <h3 class="home__title-description">Overview</h3>
+              <%# CORRECTED LINE BELOW using backticks for the long string %>
+              <p class="home__description">
+                <%= (typeof heroProduct !== 'undefined' &&
+                heroProduct.description) ? heroProduct.description : `Enjoy
+                award-winning Beats sound with wireless listening freedom and a
+                sleek, streamlined design with comfortable padded earphones,
+                delivering first-rate playback.` %>
+              </p>
+              <a
+                href="/product/<%= (typeof heroProduct !== 'undefined' && heroProduct.id) ? heroProduct.id : 'defaultProductId' %>"
+                class="button button--flex add-to-bag-btn"
+                data-product-id="<%= (typeof heroProduct !== 'undefined' && heroProduct.id) ? heroProduct.id : 'defaultHeroProductId' %>"
+              >
+                <span class="button--flex">
+                  <i class="ri-shopping-bag-line button__icon"></i> Add to Bag
+                </span>
+                <span class="home__price"
+                  >$<%= (typeof heroProduct !== 'undefined' &&
+                  heroProduct.price) ? heroProduct.price : "299" %></span
+                >
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="sponsor section">
+        <div class="sponsor__container container grid">
+          <img
+            src="/images/home-page/sponsor1.png"
+            alt="Sponsor 1"
+            class="sponsor__img"
+          />
+          <img
+            src="/images/home-page/sponsor2.png"
+            alt="Sponsor 2"
+            class="sponsor__img"
+          />
+          <img
+            src="/images/home-page/sponsor3.png"
+            alt="Sponsor 3"
+            class="sponsor__img"
+          />
+          <img
+            src="/images/home-page/sponsor4.png"
+            alt="Sponsor 4"
+            class="sponsor__img"
+          />
+        </div>
+      </section>
+
+      <section class="specs section grid" id="specs">
+        <h2 class="section__title section__title-gradient">Specs</h2>
+        <div class="specs__container container grid">
+          <div class="specs__content grid">
+            <div class="specs__data">
+              <i class="ri-bluetooth-line specs__icon"></i>
+              <h3 class="specs__title">Connection</h3>
+              <span class="specs__subtitle">Bluetooth v5.2</span>
+            </div>
+            <div class="specs__data">
+              <i class="ri-battery-charge-line specs__icon"></i>
+              <h3 class="specs__title">Battery</h3>
+              <span class="specs__subtitle">Duration 40h</span>
+            </div>
+            <div class="specs__data">
+              <i class="ri-plug-line specs__icon"></i>
+              <h3 class="specs__title">Load</h3>
+              <span class="specs__subtitle">Fast charge 4.2-AAC</span>
+            </div>
+            <div class="specs__data">
+              <i class="ri-mic-line specs__icon"></i>
+              <h3 class="specs__title">Microphone</h3>
+              <span class="specs__subtitle"
+                >Supports Apple Siri <br />
+                and Google</span
+              >
+            </div>
+          </div>
+          <div>
+            <img
+              src="/images/home-page/specs.png"
+              alt="Headphone Specifications"
+              class="specs__img"
+            />
+          </div>
+        </div>
+      </section>
+
+      <section class="case section grid" id="case">
+        <h2 class="section__title section__title-gradient">Case</h2>
+        <div class="case__container container grid">
+          <div>
+            <img
+              src="/images/home-page/case.png"
+              alt="Headphone Case"
+              class="case__img"
+            />
+          </div>
+          <div class="case__data">
+            <p class="case__description">
+              With a comfortable and adaptable case so that you can store it
+              whenever you want, and keep your durability forever.
+            </p>
+            <a href="#" class="button button--flex">
+              <i class="ri-information-line button__icon"></i> More info
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section class="discount section">
+        <div class="discount__container container grid">
+          <div class="discount__animate">
+            <h2 class="discount__title">
+              Immerse yourself in <br />
+              your music
+            </h2>
+            <p class="discount__description">Get it now, up to 50% off.</p>
+            <a href="/shop?filter=sale" class="button button--flex">
+              <i class="ri-shopping-bag-line button__icon"></i> Shop Now
+            </a>
+          </div>
+          <img
+            src="/images/home-page/discount.png"
+            alt="Discounted Headphones"
+            class="discount__img"
+          />
+        </div>
+      </section>
+
+      <section class="products section" id="products">
+        <h2 class="section__title section__title-gradient products__line">
+          Choose <br />
+          Your Style
+        </h2>
+        <div class="products__container container grid">
+          <% if (typeof featuredProducts !== 'undefined' &&
+          Array.isArray(featuredProducts) && featuredProducts.length > 0) { %>
+          <% featuredProducts.forEach(function(product) { %>
+          <article class="products__card">
+            <div class="products__content">
+              <a href="/product/<%= product.id %>">
+                <img
+                  src="<%= product.imagePath || '/images/home-page/default_product.png' %>"
+                  alt="<%= product.name %>"
+                  class="products__img"
+                />
+              </a>
+              <h3 class="products__title"><%= product.name %></h3>
+              <span class="products__price">$<%= product.price %></span>
+              <button
+                class="button button--flex products__button add-to-bag-btn"
+                data-product-id="<%= product.id %>"
+              >
+                <i class="ri-shopping-bag-line button__icon"></i>
+              </button>
+            </div>
+          </article>
+          <% }); %> <% } else { %> <% for(let i = 1; i <= 5; i++) { %>
+          <article class="products__card">
+            <div class="products__content">
+              <img
+                src="/images/home-page/product<%= i %>.png"
+                alt="Headphone Style <%= i %>"
+                class="products__img"
+              />
+              <h3 class="products__title">Style <%= i %></h3>
+              <span class="products__price">$249</span>
+              <button
+                class="button button--flex products__button add-to-bag-btn"
+                data-product-id="style<%= i %>-id"
+              >
+                <i class="ri-shopping-bag-line button__icon"></i>
+              </button>
+            </div>
+          </article>
+          <% } %> <% } %>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer section">
+      <div class="footer__container container grid">
+        <a href="/" class="footer__logo">
+          <img src="/images/home-page/logo.png" alt="DevaRaagam Logo" />
+        </a>
+        <div class="footer__content">
+          <h3 class="footer__title">Products</h3>
+          <ul class="footer__links">
+            <li>
+              <a href="/shop?category=on-ear" class="footer__link">On-Ear</a>
+            </li>
+            <li>
+              <a href="/shop?category=over-ear" class="footer__link"
+                >Over-Ear</a
+              >
+            </li>
+            <li>
+              <a href="/shop?category=earbuds" class="footer__link">Earbuds</a>
+            </li>
+            <li>
+              <a href="/shop?category=accessories" class="footer__link"
+                >Accessories</a
+              >
+            </li>
+          </ul>
+        </div>
+        <div class="footer__content">
+          <h3 class="footer__title">Support</h3>
+          <ul class="footer__links">
+            <li>
+              <a href="/support#faq" class="footer__link">Product help</a>
+            </li>
+            <li>
+              <a href="/support#register" class="footer__link">Register</a>
+            </li>
+            <li><a href="/blog" class="footer__link">Updates</a></li>
+            <li><a href="/contact" class="footer__link">Contact Us</a></li>
+          </ul>
+        </div>
+        <div class="footer__content">
+          <h3 class="footer__title">Stay Connected</h3>
+          <form
+            action="/api/subscribe-newsletter"
+            method="POST"
+            class="footer__form"
+            id="newsletterForm"
+          >
+            <input
+              type="email"
+              name="email"
+              placeholder="Email"
+              class="footer__input"
+              required
+            />
+            <button type="submit" class="button button--flex">
+              <i class="ri-send-plane-line button__icon"></i> Subscribe
+            </button>
+          </form>
+          <div id="newsletterMessage" class="small mt-2 text-white"></div>
+          <div class="footer__social mt-3">
+            <a
+              href="https://www.facebook.com/"
+              target="_blank"
+              class="footer__social-link"
+              ><i class="ri-facebook-fill"></i
+            ></a>
+            <a
+              href="https://www.instagram.com/"
+              target="_blank"
+              class="footer__social-link"
+              ><i class="ri-instagram-line"></i
+            ></a>
+            <a
+              href="https://twitter.com/"
+              target="_blank"
+              class="footer__social-link"
+              ><i class="ri-twitter-line"></i
+            ></a>
+          </div>
+        </div>
+      </div>
+      <p class="footer__copy">
+        <span class="footer__copy-link"
+          >&copy; DevaRaagam Headphones <%= new Date().getFullYear() %>. All
+          rights reserved.</span
+        >
+      </p>
+    </footer>
+
+    <a href="#" class="scrollup" id="scroll-up">
+      <i class="ri-arrow-up-s-line scrollup__icon"></i>
+    </a>
+
+    <script src="https://unpkg.com/scrollreveal"></script>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+          /*=============== SHOW MENU ===============*/
+          const navMenu = document.getElementById('nav-menu');
+          const navToggle = document.getElementById('nav-toggle');
+          const navClose = document.getElementById('nav-close');
+
+          if(navToggle && navMenu){
+              navToggle.addEventListener('click', () => navMenu.classList.add('show-menu'));
+          }
+          if(navClose && navMenu){
+              navClose.addEventListener('click', () => navMenu.classList.remove('show-menu'));
+          }
+
+          /*=============== REMOVE MENU MOBILE ===============*/
+          const navLinks = document.querySelectorAll('.nav__link');
+          function linkActionMobileMenu(){
+              if(navMenu) navMenu.classList.remove('show-menu');
+          }
+          navLinks.forEach(n => n.addEventListener('click', linkActionMobileMenu));
+
+          /*=============== CHANGE BACKGROUND HEADER ===============*/
+          function scrollHeader(){
+              const header = document.getElementById('header');
+              if(header) {
+                  if(window.scrollY >= 50) header.classList.add('scroll-header'); else header.classList.remove('scroll-header');
+              }
+          }
+          window.addEventListener('scroll', scrollHeader);
+
+          /*=============== SHOW SCROLL UP ===============*/
+          function scrollUp(){
+              const scrollUpBtn = document.getElementById('scroll-up');
+              if(scrollUpBtn) {
+                  if(window.scrollY >= 200) scrollUpBtn.classList.add('show-scroll'); else scrollUpBtn.classList.remove('show-scroll');
+              }
+          }
+          window.addEventListener('scroll', scrollUp);
+
+          /*=============== SCROLL SECTIONS ACTIVE LINK ===============*/
+          const sections = document.querySelectorAll('section[id]');
+          function scrollActive(){
+              const scrollY = window.pageYOffset;
+              let anyLinkActivated = false;
+              sections.forEach(current =>{
+                  const sectionHeight = current.offsetHeight;
+                  const sectionTop = current.offsetTop - 70;
+                  const sectionId = current.getAttribute('id');
+                  const correspondingNavLink = document.querySelector('.nav__menu a[href="#' + sectionId + '"]');
+
+                  if(correspondingNavLink){
+                      if(scrollY > sectionTop && scrollY <= sectionTop + sectionHeight){
+                          document.querySelectorAll('.nav__menu a.active-link').forEach(l => l.classList.remove('active-link'));
+                          correspondingNavLink.classList.add('active-link');
+                          anyLinkActivated = true;
+                      } else {
+                          correspondingNavLink.classList.remove('active-link');
+                      }
+                  }
+              });
+              if (!anyLinkActivated) {
+                  const homeLink = document.querySelector('.nav__menu a[href="#home"]');
+                  if (homeLink) {
+                      document.querySelectorAll('.nav__menu a.active-link').forEach(l => l.classList.remove('active-link'));
+                      homeLink.classList.add('active-link');
+                  }
+              }
+          }
+          window.addEventListener('scroll', scrollActive);
+          scrollActive();
+
+          /*=============== SCROLL REVEAL ANIMATION ===============*/
+          if (typeof ScrollReveal !== 'undefined') {
+              const sr = ScrollReveal({
+                  distance: '60px',
+                  duration: 2500,
+                  delay: 400,
+              });
+              sr.reveal(`.home__header, .section__title`,{delay: 600});
+              sr.reveal(`.home__footer`,{delay: 700});
+              sr.reveal(`.home__img`,{delay: 900, origin: 'top'});
+              sr.reveal(`.sponsor__img, .products__card, .footer__logo, .footer__content, .footer__copy`,{origin: 'top', interval: 100});
+              sr.reveal(`.specs__data, .discount__animate`,{origin: 'left', interval: 100});
+              sr.reveal(`.specs__img, .discount__img`,{origin: 'right'});
+              sr.reveal(`.case__img`,{origin: 'top'});
+              sr.reveal(`.case__data`);
+          } else {
+              console.warn('ScrollReveal library not found. Animations will not work.');
+          }
+
+          /*=============== E-COMMERCE SPECIFIC JS ===============*/
+          // Safely inject heroProductId into JS
+          const heroProductIdJs = <%- JSON.stringify( (typeof heroProduct !== 'undefined' && heroProduct && heroProduct.id) ? heroProduct.id : 'defaultHeroProductId' ) %>;
+
+          document.querySelectorAll('.add-to-bag-btn').forEach(button => {
+              button.addEventListener('click', async function(event) {
+                  event.preventDefault();
+                  let productId = this.dataset.productId;
+                  // For the main hero product button, if data-product-id was not set via EJS for some reason, use heroProductIdJs
+                  if (this.closest('.home__footer') && !productId) {
+                      productId = heroProductIdJs;
+                  }
+
+                  if (!productId || productId === 'defaultHeroProductId') { // Check against fallback
+                      console.error('Product ID not found or is default on button:', this);
+                      alert('Could not identify product.');
+                      return;
+                  }
+
+                  console.log('Add to bag clicked for product ID:', productId);
+                  const originalButtonHTML = this.innerHTML; // Store original HTML to restore icon
+                  this.disabled = true;
+                  this.innerHTML = '<i class="ri-loader-4-line button__icon spin"></i> Adding...';
+
+                  try {
+                      const response = await fetch('/cart/add', {
+                          method: 'POST',
+                          headers: { 'Content-Type': 'application/json', },
+                          body: JSON.stringify({ productId: productId, quantity: 1 })
+                      });
+                      const result = await response.json();
+
+                      if (response.ok && result.success) {
+                          alert(result.message || 'Product added to bag!');
+                          if (result.cartCount !== undefined) {
+                              const cartLink = document.querySelector('.nav__item a[href="/cart"]');
+                              if (cartLink) {
+                                  let cartBadge = cartLink.querySelector('.badge');
+                                  if (!cartBadge && result.cartCount > 0) {
+                                      cartBadge = document.createElement('span');
+                                      cartBadge.className = 'badge bg-danger rounded-pill ms-1';
+                                      cartLink.appendChild(cartBadge);
+                                  }
+                                  if (cartBadge) {
+                                     cartBadge.textContent = result.cartCount;
+                                     cartBadge.style.display = result.cartCount > 0 ? 'inline-block' : 'none';
+                                  }
+                              }
+                          }
+                      } else {
+                          alert(result.message || 'Failed to add product to bag.');
+                      }
+                  } catch (error) {
+                      console.error('Error adding to cart:', error);
+                      alert('An error occurred. Please try again.');
+                  } finally {
+                      this.disabled = false;
+                      this.innerHTML = originalButtonHTML; // Restore original button content
+                  }
+              });
+          });
+
+          const newsletterForm = document.getElementById('newsletterForm');
+          const newsletterMessage = document.getElementById('newsletterMessage');
+          if(newsletterForm && newsletterMessage) {
+              newsletterForm.addEventListener('submit', async function(e) {
+                  e.preventDefault();
+                  const emailInput = this.querySelector('input[type="email"]');
+                  const email = emailInput.value;
+                  const submitButton = this.querySelector('button[type="submit"]');
+                  const originalButtonText = submitButton.innerHTML;
+
+                  newsletterMessage.textContent = 'Subscribing...';
+                  newsletterMessage.style.color = '#FFF';
+                  submitButton.disabled = true;
+                  submitButton.innerHTML = '<i class="ri-loader-4-line button__icon spin"></i> Subscribing...';
+
+                  try {
+                      const response = await fetch('/api/subscribe-newsletter', {
+                          method: 'POST',
+                          headers: { 'Content-Type': 'application/json' },
+                          body: JSON.stringify({ email: email })
+                      });
+                      const result = await response.json();
+                      if (response.ok && result.success) {
+                          newsletterMessage.textContent = result.message || 'Subscribed successfully!';
+                          newsletterMessage.style.color = 'lightgreen';
+                          emailInput.value = '';
+                      } else {
+                          newsletterMessage.textContent = result.message || 'Subscription failed. Please try again.';
+                          newsletterMessage.style.color = 'lightcoral';
+                      }
+                  } catch (error) {
+                      console.error('Newsletter subscription error:', error);
+                      newsletterMessage.textContent = 'Could not connect to server. Please try again.';
+                      newsletterMessage.style.color = 'lightcoral';
+                  } finally {
+                      submitButton.disabled = false;
+                      submitButton.innerHTML = originalButtonText;
+                  }
+              });
+          }
+          const style = document.createElement('style');
+          style.innerHTML = `@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } } .spin { display: inline-block; animation: spin 1s linear infinite; }`;
+          document.head.appendChild(style);
+
+      }); // End of DOMContentLoaded
+    </script>
+  </body>
+</html>

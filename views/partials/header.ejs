@@ -1,0 +1,69 @@
+<header class="header sticky-top bg-dark" id="mainHeader">
+  <nav class="navbar navbar-expand-lg navbar-dark container">
+    <a class="navbar-brand" href="/">
+      <img
+        src="/images/home-page/logo.png"
+        alt="DevaRaagam Logo"
+        style="height: 30px; margin-right: 10px"
+      />DevaRaagam
+    </a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNavEcom"
+      aria-controls="navbarNavEcom"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavEcom">
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a
+            class="nav-link <%= (typeof page !== 'undefined' && page === 'home') ? 'active' : '' %>"
+            href="/"
+            >Home</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link <%= (typeof page !== 'undefined' && page === 'products') ? 'active' : '' %>"
+            href="/products"
+            >Products</a
+          >
+        </li>
+        <% if (typeof isAuthenticated !== 'undefined' && isAuthenticated) { %>
+        <li class="nav-item">
+          <a class="nav-link" href="/profile">Profile</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link position-relative" href="/cart">
+            Cart
+            <span
+              class="badge bg-danger rounded-pill position-absolute top-0 start-100 translate-middle"
+            >
+              <%= (typeof cartCount !== 'undefined' && cartCount > 0) ?
+              cartCount : '0' %>
+            </span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/orders">My Orders</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/logout">Logout</a>
+        </li>
+        <% } else { %>
+        <li class="nav-item">
+          <a class="nav-link" href="/login">Login</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/signup">Sign Up</a>
+        </li>
+        <% } %>
+      </ul>
+    </div>
+  </nav>
+</header>
